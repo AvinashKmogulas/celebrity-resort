@@ -25,6 +25,19 @@
                 </a>
             </li>
             <li class="sidenav-item">
+                <a class="sidenav-link" href="<?= BASE_URL ?>department.php">
+                    <i class="fas fa-building pr-3"></i>
+                    <span>Department</span>
+                </a>
+            </li>
+            <li class="sidenav-item">
+                <a class="sidenav-link" href="<?= BASE_URL ?>report-manager.php">
+                    <i class="fas fa-user-tie pr-3"></i>
+                    <span>Report Manager</span>
+                </a>
+            </li>
+
+            <li class="sidenav-item">
                 <a class="sidenav-link" href="job-post.php">
                     <i class="fas fa-briefcase pr-3"></i>
                     <span>Job Post</span>
@@ -88,9 +101,7 @@
                     <ul
                         class="dropdown-menu dropdown-menu-right"
                         aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">My profile</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>code/logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>

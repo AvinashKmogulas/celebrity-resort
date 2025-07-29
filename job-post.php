@@ -9,16 +9,16 @@ require_once("includes/sidebar.php");
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Users</li>
+                <li class="breadcrumb-item active" aria-current="page">Job Post</li>
             </ol>
         </nav>
 
         <!-- ✅ Card -->
         <div class="card shadow-2 mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">User List</h5>
-                <a href="add-user.php" class="btn btn-primary btn-sm">
-                    <i class="fas fa-user-plus me-1"></i> Add User
+                <h5 class="mb-0">Job List</h5>
+                <a href="create-job.php" class="btn btn-primary btn-sm">
+                    <i class="fas fa-user-plus me-1"></i> Create Job
                 </a>
             </div>
 
@@ -29,40 +29,43 @@ require_once("includes/sidebar.php");
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
+                                <th>Job Title</th>
+                                <th>Department</th>
+                                <th>Reports To</th>
+                                <th>Job Description</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $stmt = $pdo->prepare("SELECT * FROM admin");
+                            $sn = 1;
+                            $stmt = $pdo->prepare("SELECT * FROM job_posts");
                             $stmt->execute();
-                            $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            foreach ($admins as $admin) {
+                            $job_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($job_posts as $job_post) {
                             ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td><?= $admin['name'] ?></td>
-                                    <td><?= $admin['email'] ?></td>
-                                    <td><?= $admin['role'] ?></td>
+                                    <td><?= $sn++; ?></td>
+                                    <td><?= $job_post['title'] ?></td>
+                                    <td><?= $job_post['department'] ?></td>
+                                    <td><?= $job_post['report'] ?></td>
+                                    <td><?= substr($job_post['description'], 0, 100) ?>...</td>
                                     <td>
-                                        <a class="btn btn-sm <?= $admin['status'] == 1 ? 'btn-success' : 'btn-danger' ?> change-status"
-                                            data-id="<?= $admin['id'] ?>"
-                                            data-status="<?= $admin['status'] ?>">
+                                        <a class="btn btn-sm <?= $job_post['status'] == 1 ? 'btn-success' : 'btn-danger' ?> change-status"
+                                            data-id="<?= $job_post['id'] ?>"
+                                            data-status="<?= $job_post['status'] ?>">
                                             <i class="fas fa-sync-alt"></i>
-                                            <?= $admin['status'] == 1 ? 'Active' : 'Deactive' ?>
+                                            <?= $job_post['status'] == 1 ? 'Active' : 'Deactive' ?>
                                         </a>
 
                                     </td>
                                     <td>
-                                        <!-- <button class="btn btn-sm btn-warning me-1 edit-user" data-id="<?= $admin['id'] ?>">
-                                            <i class="fas fa-edit"></i>
-                                        </button> -->
+                                        <button class="btn btn-sm btn-warning me-1 edit-post" data-id="<?= $job_post['id'] ?>">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
 
-                                        <button class="btn btn-sm btn-danger delete-user" data-id="<?= $admin['id'] ?>">
+                                        <button class="btn btn-sm btn-danger delete-user" data-id="<?= $job_post['id'] ?>">
                                             <i class="fas fa-trash"></i> Delete
                                         </button>
                                     </td>

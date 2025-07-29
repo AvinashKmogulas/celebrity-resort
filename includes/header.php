@@ -1,5 +1,12 @@
 <?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+
 require_once("config/config.php");
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +19,7 @@ require_once("config/config.php");
     <title>Material Design for Bootstrap</title>
     <link rel="icon" href="<?= BASE_URL ?>assets/images/logo/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <link
         rel="stylesheet"

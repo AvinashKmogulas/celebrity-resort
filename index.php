@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Login</title>
+    <link rel="icon" href="assets/images/logo/favicon.png" />
 
     <!-- MDB Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css" rel="stylesheet" />
@@ -52,7 +53,7 @@
         <div class="login-box">
             <h4 class="text-center mb-4">Admin Login</h4>
 
-            <form method="post" action="admin-login.php">
+            <form method="post" id="login">
                 <!-- Email -->
                 <div class="mb-4">
                     <label for="email"><i class="fas fa-envelope me-2"></i>Email</label>
@@ -70,12 +71,6 @@
                     <input class="form-check-input" type="checkbox" id="showPassword" />
                     <label class="form-check-label" for="showPassword">Show Password</label>
                 </div>
-
-                <!-- Forgot Password -->
-                <div class="forgot-link mb-3">
-                    <a href="forgot-password.php" class="text-primary">Forgot Password?</a>
-                </div>
-
                 <!-- Login Button -->
                 <button type="submit" class="btn btn-primary btn-block w-100">Login</button>
             </form>
@@ -90,6 +85,29 @@
         document.getElementById("showPassword").addEventListener("change", function() {
             const pwd = document.getElementById("password");
             pwd.type = this.checked ? "text" : "password";
+        });
+
+        document.getElementById("login").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch("code/login-proccess.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.text())
+                .then(data => {
+                    if (data === "success") {
+                        window.location.href = "dashboard.php";
+                    } else {
+                        alert("Login Failed: " + data);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Something went wrong");
+                });
         });
     </script>
 </body>

@@ -21,25 +21,25 @@ require_once("includes/sidebar.php");
                 <h5 class="mb-0">Add New User</h5>
             </div>
             <div class="card-body">
-                <form method="POST" action="save-user.php">
+                <form method="POST" id="add-user">
 
                     <!-- Name -->
                     <div class="mb-4">
-                        <label class="form-label" for="name">Full Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required />
+                        <label class="form-label" for="name">Full Name: <span id="nameErr"></span> </label>
+                        <input type="text" id="name" name="name" class="form-control" />
                     </div>
 
                     <!-- Email -->
                     <div class="mb-4">
-                        <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required />
+                        <label class="form-label" for="email">Email: <span id="emailErr"></span> </label>
+                        <input type="email" id="email" name="email" class="form-control" />
                     </div>
 
                     <!-- Password -->
                     <div class="mb-4">
-                        <label class="form-label" for="password">Password</label>
+                        <label class="form-label" for="password">Password: <span id="passwordErr"></span> </label>
                         <div class="input-group">
-                            <input type="password" id="password" name="password" class="form-control" required />
+                            <input type="password" id="password" name="password" class="form-control" />
                             <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                                 <i class="fas fa-eye"></i>
                             </button>
@@ -48,8 +48,8 @@ require_once("includes/sidebar.php");
 
                     <!-- Role -->
                     <div class="mb-4">
-                        <label class="form-label" for="role">Role</label>
-                        <select name="role" id="role" class="form-select" required>
+                        <label class="form-label" for="role">Role: <span id="roleErr"></span> </label>
+                        <select name="role" id="role" class="form-select">
                             <option value="" disabled selected>Select Role</option>
                             <option value="Admin">Admin</option>
                             <option value="User">User</option>
