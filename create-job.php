@@ -47,12 +47,12 @@ if ($editMode) {
                     <input type="hidden" name="id" id="jobid" value="<?php echo $jobId; ?>">
 
                     <div class="mb-4">
-                        <label class="form-label" for="title">Job Title:</label>
+                        <label class="form-label" for="title">Job Title: <span id="titleErr"> </span> </label>
                         <input type="text" id="title" name="title" class="form-control" value="<?php echo htmlspecialchars($title); ?>" />
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label" for="department">Department:</label>
+                        <label class="form-label" for="department">Department: <span id="departErr"> </span> </label>
                         <?php
                         $stmt = $pdo->prepare("SELECT id, department FROM department");
                         $stmt->execute();
@@ -72,7 +72,7 @@ if ($editMode) {
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label" for="report">Report To:</label>
+                        <label class="form-label" for="report">Report To: <span id="reportErr"> </span> </label>
                         <?php
                         $stmt = $pdo->prepare("SELECT id, name FROM report_manager");
                         $stmt->execute();
@@ -92,7 +92,7 @@ if ($editMode) {
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label" for="job-d">Job Description:</label>
+                        <label class="form-label" for="job-d">Job Description: <span id="jdErr"> </span> </label>
                         <textarea class="form-control" name="description" id="job-d"><?php echo htmlspecialchars($description); ?></textarea>
                     </div>
 

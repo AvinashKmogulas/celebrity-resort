@@ -17,6 +17,8 @@ if (isset($_POST['action']) && $_POST['action'] == "change_status") {
         } catch (PDOException $e) {
             echo "Failed to update status: " . $e->getMessage();
         }
+    } else {
+        echo "Invalid request";
     }
 } else if (isset($_POST['action']) && $_POST['action'] == "delete_post") {
     if (isset($_POST['id'])) {

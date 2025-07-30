@@ -25,7 +25,7 @@ require_once("includes/sidebar.php");
             <!-- ✅ MDB Table -->
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="userTable" class="table table-hover align-middle mb-0">
+                    <table id="jobPostTable" class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
@@ -40,25 +40,53 @@ require_once("includes/sidebar.php");
                         <tbody>
                             <?php
                             $sn = 1;
-                            $stmt = $pdo->prepare("SELECT * FROM job_posts");
+                            $stmt = $pdo->prepare("SELECT * FROM job_posts ORDER BY id DESC");
                             $stmt->execute();
                             $job_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
                             foreach ($job_posts as $job_post) {
+                                // Department names
+                                $department_names = [];
+                                if (!empty($job_post['department'])) {
+                                    $dept_ids = explode(',', $job_post['department']);
+                                    foreach ($dept_ids as $dept_id) {
+                                        $dept_stmt = $pdo->prepare("SELECT department FROM department WHERE id = ?");
+                                        $dept_stmt->execute([$dept_id]);
+                                        $dept_name = $dept_stmt->fetchColumn();
+                                        if ($dept_name) {
+                                            $department_names[] = $dept_name;
+                                        }
+                                    }
+                                }
+
+                                // Report manager names
+                                $report_names = [];
+                                if (!empty($job_post['report'])) {
+                                    $report_ids = explode(',', $job_post['report']);
+                                    foreach ($report_ids as $report_id) {
+                                        $report_stmt = $pdo->prepare("SELECT name FROM report_manager WHERE id = ?");
+                                        $report_stmt->execute([$report_id]);
+                                        $report_name = $report_stmt->fetchColumn();
+                                        if ($report_name) {
+                                            $report_names[] = $report_name;
+                                        }
+                                    }
+                                }
+
                             ?>
                                 <tr>
                                     <td><?= $sn++; ?></td>
-                                    <td><?= $job_post['title'] ?></td>
-                                    <td><?= $job_post['department'] ?></td>
-                                    <td><?= $job_post['report'] ?></td>
-                                    <td><?= substr($job_post['description'], 0, 100) ?>...</td>
+                                    <td><?= htmlspecialchars($job_post['title']) ?></td>
+                                    <td><?= htmlspecialchars(implode(' / ', $department_names)) ?></td>
+                                    <td><?= htmlspecialchars(implode(' / ', $report_names)) ?></td>
+                                    <td><?= htmlspecialchars(strip_tags(substr($job_post['description'], 0, 100))) ?>...</td>
                                     <td>
-                                        <a class="btn btn-sm <?= $job_post['status'] == 1 ? 'btn-success' : 'btn-danger' ?> change-status"
+                                        <button class="btn btn-sm <?= $job_post['status'] == 1 ? 'btn-success' : 'btn-danger' ?> change-status"
                                             data-id="<?= $job_post['id'] ?>"
                                             data-status="<?= $job_post['status'] ?>">
                                             <i class="fas fa-sync-alt"></i>
                                             <?= $job_post['status'] == 1 ? 'Active' : 'Deactive' ?>
-                                        </a>
-
+                                        </button>
                                     </td>
                                     <td>
                                         <button class="btn btn-sm btn-warning me-1 edit-post" data-id="<?= $job_post['id'] ?>">
@@ -73,7 +101,6 @@ require_once("includes/sidebar.php");
                             <?php
                             }
                             ?>
-                            <!-- Add more rows dynamically using PHP -->
                         </tbody>
                     </table>
                 </div>

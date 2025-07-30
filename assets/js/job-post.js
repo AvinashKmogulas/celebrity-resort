@@ -7,7 +7,6 @@ $(document).ready(function () {
     let reportTo = $("#report").val();
     let description = tinymce.get("job-d").getContent().trim();
 
-
     let isValid = true;
     // Name Validation
     if (title == "") {
@@ -93,6 +92,7 @@ $(document).ready(function () {
   $(document).on("click", ".change-status", function () {
     const userId = $(this).data("id");
     const currentStatus = $(this).data("status");
+    console.log(userId, currentStatus);
     const newStatus = currentStatus === 1 ? "deactivated" : "activated";
 
     Swal.fire({
